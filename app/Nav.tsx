@@ -8,6 +8,7 @@ const links = [
   { href: '/meals', label: 'Meals', icon: '🍽️' },
   { href: '/plans', label: 'Plans', icon: '📝' },
   { href: '/packing', label: 'Packing', icon: '🧳' },
+  { href: '/settings', label: 'Settings', icon: '⚙️' },
 ]
 
 export default function Nav() {
