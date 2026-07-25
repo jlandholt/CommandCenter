@@ -1,7 +1,8 @@
 'use client'
 
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
+import { supabase } from '../lib/supabase'
 
 const links = [
   { href: '/', label: 'Calendar', icon: '📅' },
@@ -13,14 +14,21 @@ const links = [
 
 export default function Nav() {
   const path = usePathname()
+  const router = useRouter()
+
   function active(href: string) {
     return href === '/' ? path === '/' : path.startsWith(href)
+  }
+
+  async function signOut() {
+    await supabase.auth.signOut()
+    router.push('/login')
   }
 
   return (
     <>
       {/* Desktop sidebar */}
-      <nav className="side-nav">
+      <nav className="side-nav" style={{ display: 'flex', flexDirection: 'column' }}>
         <div style={{ fontSize: 16, fontWeight: 600, padding: '4px 12px 20px' }}>Home</div>
         {links.map((l) => (
           <Link key={l.href} href={l.href}
@@ -35,6 +43,11 @@ export default function Nav() {
             {l.label}
           </Link>
         ))}
+        <button onClick={signOut}
+          style={{ marginTop: 'auto', display: 'flex', alignItems: 'center', gap: 10, padding: '10px 12px',
+            border: 'none', background: 'none', color: '#888', fontSize: 14, cursor: 'pointer', textAlign: 'left' }}>
+          <span style={{ fontSize: 18 }}>↩</span> Sign out
+        </button>
       </nav>
 
       {/* Phone bottom bar */}
@@ -51,6 +64,11 @@ export default function Nav() {
             {l.label}
           </Link>
         ))}
+        <button onClick={signOut}
+          style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2,
+            border: 'none', background: 'none', color: '#999', fontSize: 11, cursor: 'pointer' }}>
+          <span style={{ fontSize: 20 }}>↩</span> Out
+        </button>
       </nav>
     </>
   )
