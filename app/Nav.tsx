@@ -5,6 +5,8 @@ import { usePathname, useRouter } from 'next/navigation'
 import { supabase } from '../lib/supabase'
 
 const links = [
+  { href: '/inbox', label: 'Inbox', icon: '📥' },
+  { href: '/todos', label: 'To-dos', icon: '✅' },
   { href: '/', label: 'Calendar', icon: '📅' },
   { href: '/meals', label: 'Meals', icon: '🍽️' },
   { href: '/plans', label: 'Plans', icon: '📝' },
